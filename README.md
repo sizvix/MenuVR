@@ -1,6 +1,7 @@
 # MenuVR
 A user frienfy menu to use in a-frame scene.
 
+Example :
 ```javascript
 var expl_menu = { 
     'play' :    function(){alert('play')},
@@ -18,7 +19,10 @@ window.addEventListener('load',function(){
 });
 ```
 
+Screenshot :
 ![screenshot](MenuVR_example.png)
+
+
 
 **TODO :**
   - MenuVR.value(id)
