@@ -1,6 +1,8 @@
 # MenuVR
 A user frienfy menu to use in a-frame scene
 
+![screenshot](MenuVR_example.png)
+
 **TODO :**
   - MenuVR.value(id)
   - MenuVR.onchange()
