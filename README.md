@@ -1,5 +1,22 @@
 # MenuVR
-A user frienfy menu to use in a-frame scene
+A user frienfy menu to use in a-frame scene.
+
+```javascript
+var expl_menu = { 
+    'play' :    function(){alert('play')},
+    'options' : { 
+        'dark':true,                                                                // values are boolean and default is true
+        'nb lives':[1,2,3],
+        'difficulty': ['easy','normal','hard']
+    },
+    'about':    'A text\nwith many lines\nand some informations',
+    'exit':     function(){alert('quit')}
+};
+window.addEventListener('load',function(){
+    var menu = new MenuVR(expl_menu);
+//    var menu = new MenuVR(expl_menu,{line_height:0.2,fonts:'mono'});              // an other example
+});
+```
 
 ![screenshot](MenuVR_example.png)
 
