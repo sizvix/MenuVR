@@ -17,6 +17,8 @@ function MenuVR(menu,options){
     this.reso = 80 ;
     this.fonts = 'Calibri,Geneva,Arial';
     
+    this.values = {};
+    
     this.make_canvas = function(name,color){
         var ass = document.createElement('a-assets');
         var cnv = document.createElement('canvas');
@@ -41,28 +43,39 @@ function MenuVR(menu,options){
         father.appendChild(ent);
         return ent ;
     };
-    this.lay_line_val = function(father,cnv,cnv_v,pos){
+    this.lay_line_val = function(father,name,cnv,cnv_v,pos){
         var ent = document.createElement('a-entity');
         ent.setAttribute('geometry',"primitive: plane;height:"+this.line_height+";width:"+cnv.width/this.coef_width );
         ent.setAttribute('material',"src: #"+cnv.id+";opacity:0.9");
         ent.setAttribute('position',(pos.x-(cnv.width/this.coef_width)/2)+' '+pos.y+' '+pos.z);
         ent.setAttribute('draw-canvas',cnv.id);
         father.appendChild(ent);
+        var this_val = this.values;
         var ents = [] ;
-        for(var val of cnv_v){
+        for(var value in cnv_v){
+            let cnv = cnv_v[value];
             let entmp = document.createElement('a-entity');
-            entmp.setAttribute('geometry',"primitive: plane;height:"+this.line_height+";width:"+(val.width/this.coef_width) );
-            entmp.setAttribute('material',"src: #"+val.id+";opacity:0.9");
-            entmp.setAttribute('position',(pos.x+(val.width/this.coef_width)/2)+' '+pos.y+' '+pos.z);
-            entmp.setAttribute('draw-canvas',val.id);
+            entmp.setAttribute('geometry',"primitive: plane;height:"+this.line_height+";width:"+(cnv.width/this.coef_width) );
+            entmp.setAttribute('material',"src: #"+cnv.id+";opacity:0.9");
+            entmp.setAttribute('position',(pos.x+(cnv.width/this.coef_width)/2)+' '+pos.y+' '+pos.z);
+            entmp.setAttribute('draw-canvas',cnv.id);
+            entmp.setAttribute('value',value);
             father.appendChild(entmp);
             if(ents.length>0){
                 entmp.setAttribute('visible',false);
-                ents[ents.length-1].addEventListener('click', function(){this.setAttribute('visible',false);entmp.setAttribute('visible',true)} );
+                ents[ents.length-1].addEventListener('click', function(){
+                    this.setAttribute('visible',false);
+                    entmp.setAttribute('visible',true);
+                    this_val[name] = entmp.getAttribute('value');
+                } );
             }
             ents.push(entmp);
         }
-        ents[ents.length-1].addEventListener('click', function(){this.setAttribute('visible',false);ents[0].setAttribute('visible',true)} );
+        ents[ents.length-1].addEventListener('click', function(){
+            this.setAttribute('visible',false);
+            ents[0].setAttribute('visible',true);
+            this_val[name] = ents[0].getAttribute('value');
+        } );
     };
     this.display_menu = function(father,menu){
         var pos = this.camera.getAttribute('position') ;
@@ -76,8 +89,9 @@ function MenuVR(menu,options){
                 case 'array' :
                     var cnv_v = [] ;
                     for(var v of menu[name])
-                        cnv_v.push( this.make_canvas(' '+v,'#00b414') ) ;
-                    this.lay_line_val(father,cnv,cnv_v,pos);
+                        cnv_v[v] = this.make_canvas(' '+v,'#00b414') ;
+                    this.values[name] = menu[name][Object.keys(menu[name])[0]];                 // take the first value
+                    this.lay_line_val(father,name,cnv,cnv_v,pos);
                     break ;
                 case 'string' :
                     var text = menu[name].split("\n");

@@ -13,8 +13,10 @@
 		</a-entity>
     </a-scene>
     <script>
+var menu ;
+    
 var expl_menu = { 
-    'play' :    function(){alert('play')},
+    'start' :    function(){ alert('Start with option values : '+JSON.stringify(menu.values)); },
     'options' : { 
         'dark':true,
         'nb lives':[1,2,3],
@@ -25,7 +27,7 @@ var expl_menu = {
 };
 
 window.addEventListener('load',function(){
-    var menu = new MenuVR(expl_menu);
+    menu = new MenuVR(expl_menu);
 //    var menu = new MenuVR(expl_menu,{line_height:0.2,fonts:'mono'});              // an other example
 });
     </script>
