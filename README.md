@@ -3,8 +3,10 @@ A user frienfy menu to use in a-frame scene.
 
 Example :
 ```javascript
+var menu ;
+    
 var expl_menu = { 
-    'play' :    function(){alert('play')},
+    'start' :    function(){ alert('Start with option values : '+JSON.stringify(menu.values)); },
     'options' : { 
         'dark':true,                                                                // values are boolean and default is true
         'nb lives':[1,2,3],
@@ -27,7 +29,6 @@ Screenshot :
 
 
 **TODO :**
-  - MenuVR.value(id)
   - MenuVR.onchange()
   - image value
   - int value
