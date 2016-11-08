@@ -16,6 +16,10 @@ function MenuVR(menu,options){
     this.line_height = 0.3 ;
     this.reso = 80 ;
     this.fonts = 'Calibri,Geneva,Arial';
+    this.font_color = '#0014b4' ;
+    this.value_color = '#00b414' ;
+    this.bg_color = '#ffffff' ;
+    this.bg_opacity = 0 ;
     
     this.values = {};
     
@@ -27,6 +31,10 @@ function MenuVR(menu,options){
         var ctx = cnv.getContext('2d'); 
         ctx.font = this.reso+"pt "+this.fonts;
         cnv.width = ctx.measureText(name).width;                                    // set the canvas width on the text width to be easyer to center
+        if(this.bg_opacity>0){
+            ctx.fillStyle = this.bg_color+ ( this.bg_color<16 ? '0' : '' ) +Math.round(this.bg_opacity*255).toString(16);           // set the background color with opacity [0,1]->[00,ff]
+            ctx.fillRect(0,0, 100,100);
+        }
         ctx.font = this.reso+"pt "+this.fonts;
         ctx.fillStyle = color;
         ctx.fillText(name, 0, this.reso);
@@ -82,14 +90,14 @@ function MenuVR(menu,options){
         father.setAttribute('position',pos.x+' '+pos.y+' '+(pos.z-1));
         pos = {x:0,z:0, y: (Object.keys(menu).length-1)*this.line_height/2 } ;
         for(var name in menu){
-            var cnv = this.make_canvas(name,'#0014b4');
+            var cnv = this.make_canvas(name,this.font_color);
             switch( Array.isArray(menu[name])? 'array' : typeof(menu[name]) ){
                 case 'boolean' :
                     menu[name] = menu[name]? ['true','false']:['false','true'];
                 case 'array' :
                     var cnv_v = [] ;
                     for(var v of menu[name])
-                        cnv_v[v] = this.make_canvas(' '+v,'#00b414') ;
+                        cnv_v[v] = this.make_canvas(' '+v,this.value_color) ;
                     this.values[name] = menu[name][Object.keys(menu[name])[0]];                 // take the first value
                     this.lay_line_val(father,name,cnv,cnv_v,pos);
                     break ;
