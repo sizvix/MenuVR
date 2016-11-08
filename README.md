@@ -1,5 +1,5 @@
 # MenuVR
-A user frienfy menu to use in a-frame scene.
+A user friendly menu to use in an a-frame scene.
 
 Example :
 ```javascript
