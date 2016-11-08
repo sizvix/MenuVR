@@ -24,7 +24,7 @@ window.addEventListener('load',function(){
 
 Screenshot :
 
-![screenshot](MenuVR_example.png)
+![screenshot](MenuVR_example.gif)
 
 
 
